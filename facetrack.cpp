@@ -36,7 +36,8 @@ unsigned char LSB = 0;
 
 int main(int argc, const char** argv)
 {
-    CvCapture* capture;
+    //CvCapture* capture; it was changed due to open cv updates
+    VideoCapture capture;
     Mat frame;
 
     // serial to Arduino setup 
@@ -51,12 +52,15 @@ int main(int argc, const char** argv)
     if (!eyes_cascade.load(eyes_cascade_name)) { printf("--(!)Error loading\n"); return -1; };
 
     //-- 2. Read the video stream
-    capture = cvCaptureFromCAM(3);
-    if (capture)
+    //capture = cvCaptureFromCAM(3); it was changed due to open cv updates
+    capture.open(-1);
+    //if (capture) тут
+        if (capture.isOpened())
     {
         while (true)
         {
-            frame = cvQueryFrame(capture);
+            //frame = cvQueryFrame(capture); тут
+            capture.read(frame);
             //-- 3. Apply the classifier to the frame
             if (!frame.empty())
             {
@@ -88,10 +92,10 @@ void detectAndDisplay(Mat frame)
     std::vector<Rect> faces;
     Mat frame_gray;
 
-    cvtColor(frame, frame_gray, CV_BGR2GRAY);
+    cvtColor(frame, frame_gray, /*CV_BGR2GRAY -- it was changed due to open cv updates*/cv::COLOR_BGRA2GRAY);
     equalizeHist(frame_gray, frame_gray);
     //-- Detect faces
-    face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+    face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0 | /*CV_HAAR_SCALE_IMAGE -- it was changed due to open cv updates*/ CASCADE_SCALE_IMAGE, Size(30, 30));
 
     for (int i = 0; i < faces.size(); i++)
     {

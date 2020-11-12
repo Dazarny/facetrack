@@ -23,5 +23,8 @@
     <ClInclude Include="..\seriallib\tserial.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\k4\opencv\build\include\opencv2\objdetect\objdetect.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

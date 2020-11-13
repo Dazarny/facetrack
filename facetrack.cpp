@@ -36,6 +36,7 @@ unsigned char LSB = 0;
 
 int main(int argc, const char** argv)
 {
+    printf("\n===Face track===\n");
     //CvCapture* capture; it was changed due to open cv updates
     VideoCapture capture;
     Mat frame;
@@ -48,14 +49,14 @@ int main(int argc, const char** argv)
     // serial to Arduino setup 
 
     //-- 1. Load the cascades
-    if (!face_cascade.load(face_cascade_name)) { printf("--(!)Error loading\n"); return -1; };
-    if (!eyes_cascade.load(eyes_cascade_name)) { printf("--(!)Error loading\n"); return -1; };
+    if (!face_cascade.load(face_cascade_name)) { printf("--(!)Error loading \n"); return -1; };
+    if (!eyes_cascade.load(eyes_cascade_name)) { printf("--(!)Error loading \n"); return -1; };
 
     //-- 2. Read the video stream
     //capture = cvCaptureFromCAM(3); it was changed due to open cv updates
-    capture.open(-1);
+    capture.open(0);
     //if (capture) тут
-        if (capture.isOpened())
+    if (capture.isOpened())
     {
         while (true)
         {

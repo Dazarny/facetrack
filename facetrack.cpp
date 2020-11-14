@@ -44,7 +44,7 @@ int main(int argc, const char** argv)
     // serial to Arduino setup 
     arduino_com = new Tserial();
     if (arduino_com != 0) {
-        arduino_com->connect((char *)"COM7", 57600, spNONE);
+        arduino_com->connect((char *)"COM3", 57600, spNONE);
     }
     // serial to Arduino setup 
 
@@ -55,12 +55,12 @@ int main(int argc, const char** argv)
     //-- 2. Read the video stream
     //capture = cvCaptureFromCAM(3); it was changed due to open cv updates
     capture.open(0);
-    //if (capture) тут
+    //if (capture) -- it was changed due to open cv updates
     if (capture.isOpened())
     {
         while (true)
         {
-            //frame = cvQueryFrame(capture); тут
+            //frame = cvQueryFrame(capture); it was changed due to open cv updates
             capture.read(frame);
             //-- 3. Apply the classifier to the frame
             if (!frame.empty())
@@ -89,6 +89,7 @@ int main(int argc, const char** argv)
  */
 void detectAndDisplay(Mat frame)
 {
+    
 
     std::vector<Rect> faces;
     Mat frame_gray;
@@ -102,7 +103,7 @@ void detectAndDisplay(Mat frame)
     {
         Point center(faces[i].x + faces[i].width * 0.5, faces[i].y + faces[i].height * 0.5);
         ellipse(frame, center, Size(faces[i].width * 0.5, faces[i].height * 0.5), 0, 0, 360, Scalar(255, 0, 255), 2, 8, 0);
-        //  cout << "X:" << faces[i].x  <<  "  y:" << faces[i].y  << endl;
+        cout << "X:" << faces[i].x  <<  "  y:" << faces[i].y  << endl;
 
          // send X,Y of face center to serial com port	
          // send X axis
@@ -120,8 +121,8 @@ void detectAndDisplay(Mat frame)
         arduino_com->sendChar(LSB);
         // serial com port send	 
 
-        Mat faceROI = frame_gray(faces[i]);
-        std::vector<Rect> eyes;
+        //Mat faceROI = frame_gray(faces[i]);
+        //std::vector<Rect> eyes;
     }
 
     //-- Show what you got
